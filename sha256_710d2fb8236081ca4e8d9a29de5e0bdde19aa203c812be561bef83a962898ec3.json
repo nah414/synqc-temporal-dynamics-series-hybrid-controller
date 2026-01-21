@@ -1,0 +1,1012 @@
+{
+  "builder": {
+    "id": ""
+  },
+  "buildType": "https://mobyproject.org/buildkit@v1",
+  "materials": [
+    {
+      "uri": "pkg:docker/python@3.12-slim?platform=linux%2Famd64",
+      "digest": {
+        "sha256": "a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3"
+      }
+    }
+  ],
+  "invocation": {
+    "configSource": {
+      "entryPoint": "Dockerfile"
+    },
+    "parameters": {
+      "frontend": "dockerfile.v0",
+      "args": {
+        "label:com.docker.compose.project": "synqc-tds",
+        "label:com.docker.compose.service": "worker",
+        "label:com.docker.compose.version": "2.40.3",
+        "local-sessionid:context": "z0bji5ekus05qhk8khy6utggs",
+        "local-sessionid:dockerfile": "z0bji5ekus05qhk8khy6utggs"
+      },
+      "locals": [
+        {
+          "name": "context"
+        },
+        {
+          "name": "dockerfile"
+        }
+      ]
+    },
+    "environment": {
+      "platform": "linux/amd64"
+    }
+  },
+  "buildConfig": {
+    "llbDefinition": [
+      {
+        "id": "step0",
+        "op": {
+          "Op": {
+            "source": {
+              "identifier": "docker-image://docker.io/library/python:3.12-slim@sha256:a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3",
+              "attrs": {
+                "image.resolvemode": "local"
+              }
+            }
+          },
+          "platform": {
+            "Architecture": "amd64",
+            "OS": "linux"
+          },
+          "constraints": {}
+        }
+      },
+      {
+        "id": "step1",
+        "op": {
+          "Op": {
+            "file": {
+              "actions": [
+                {
+                  "input": 0,
+                  "secondaryInput": -1,
+                  "output": 0,
+                  "Action": {
+                    "mkdir": {
+                      "path": "/app",
+                      "mode": 493,
+                      "makeParents": true,
+                      "timestamp": -1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step0:0"
+        ]
+      },
+      {
+        "id": "step2",
+        "op": {
+          "Op": {
+            "exec": {
+              "meta": {
+                "args": [
+                  "/bin/sh",
+                  "-c",
+                  "pip install --no-cache-dir -U pip setuptools wheel"
+                ],
+                "env": [
+                  "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                  "LANG=C.UTF-8",
+                  "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                  "PYTHON_VERSION=3.12.12",
+                  "PYTHON_SHA256=fb85a13414b028c49ba18bbd523c2d055a30b56b18b92ce454ea2c51edc656c4",
+                  "PYTHONDONTWRITEBYTECODE=1",
+                  "PYTHONUNBUFFERED=1"
+                ],
+                "cwd": "/app",
+                "removeMountStubsRecursive": true
+              },
+              "mounts": [
+                {
+                  "dest": "/"
+                }
+              ]
+            }
+          },
+          "platform": {
+            "Architecture": "amd64",
+            "OS": "linux"
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step1:0"
+        ]
+      },
+      {
+        "id": "step3",
+        "op": {
+          "Op": {
+            "source": {
+              "identifier": "local://context",
+              "attrs": {
+                "local.excludepatterns": "[\"__pycache__\",\"*.pyc\",\"*.pyo\",\".pytest_cache\",\".mypy_cache\",\".ruff_cache\",\".venv\",\"venv\",\".env\",\".git\",\".github\",\"scripts\",\"tests\",\"_ops\",\"ops\"]",
+                "local.followpaths": "[\"README.md\",\"pyproject.toml\",\"synqc_backend\"]",
+                "local.sharedkeyhint": "context"
+              }
+            }
+          },
+          "constraints": {}
+        }
+      },
+      {
+        "id": "step4",
+        "op": {
+          "Op": {
+            "file": {
+              "actions": [
+                {
+                  "input": 0,
+                  "secondaryInput": 1,
+                  "output": -1,
+                  "Action": {
+                    "copy": {
+                      "src": "/pyproject.toml",
+                      "dest": "/app/",
+                      "mode": -1,
+                      "followSymlink": true,
+                      "dirCopyContents": true,
+                      "createDestPath": true,
+                      "allowWildcard": true,
+                      "allowEmptyWildcard": true,
+                      "timestamp": -1
+                    }
+                  }
+                },
+                {
+                  "input": 2,
+                  "secondaryInput": 1,
+                  "output": 0,
+                  "Action": {
+                    "copy": {
+                      "src": "/README.md",
+                      "dest": "/app/",
+                      "mode": -1,
+                      "followSymlink": true,
+                      "dirCopyContents": true,
+                      "createDestPath": true,
+                      "allowWildcard": true,
+                      "allowEmptyWildcard": true,
+                      "timestamp": -1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step2:0",
+          "step3:0"
+        ]
+      },
+      {
+        "id": "step5",
+        "op": {
+          "Op": {
+            "file": {
+              "actions": [
+                {
+                  "input": 0,
+                  "secondaryInput": 1,
+                  "output": 0,
+                  "Action": {
+                    "copy": {
+                      "src": "/synqc_backend",
+                      "dest": "/app/synqc_backend",
+                      "mode": -1,
+                      "followSymlink": true,
+                      "dirCopyContents": true,
+                      "createDestPath": true,
+                      "allowWildcard": true,
+                      "allowEmptyWildcard": true,
+                      "timestamp": -1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step4:0",
+          "step3:0"
+        ]
+      },
+      {
+        "id": "step6",
+        "op": {
+          "Op": {
+            "exec": {
+              "meta": {
+                "args": [
+                  "/bin/sh",
+                  "-c",
+                  "pip install --no-cache-dir --prefix=/install ."
+                ],
+                "env": [
+                  "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                  "LANG=C.UTF-8",
+                  "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                  "PYTHON_VERSION=3.12.12",
+                  "PYTHON_SHA256=fb85a13414b028c49ba18bbd523c2d055a30b56b18b92ce454ea2c51edc656c4",
+                  "PYTHONDONTWRITEBYTECODE=1",
+                  "PYTHONUNBUFFERED=1"
+                ],
+                "cwd": "/app",
+                "removeMountStubsRecursive": true
+              },
+              "mounts": [
+                {
+                  "dest": "/"
+                }
+              ]
+            }
+          },
+          "platform": {
+            "Architecture": "amd64",
+            "OS": "linux"
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step5:0"
+        ]
+      },
+      {
+        "id": "step7",
+        "op": {
+          "Op": {
+            "file": {
+              "actions": [
+                {
+                  "input": 0,
+                  "secondaryInput": 1,
+                  "output": 0,
+                  "Action": {
+                    "copy": {
+                      "src": "/install",
+                      "dest": "/usr/local",
+                      "mode": -1,
+                      "followSymlink": true,
+                      "dirCopyContents": true,
+                      "createDestPath": true,
+                      "allowWildcard": true,
+                      "allowEmptyWildcard": true,
+                      "timestamp": -1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step1:0",
+          "step6:0"
+        ]
+      },
+      {
+        "id": "step8",
+        "op": {
+          "Op": {
+            "exec": {
+              "meta": {
+                "args": [
+                  "/bin/sh",
+                  "-c",
+                  "mkdir -p /data"
+                ],
+                "env": [
+                  "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                  "LANG=C.UTF-8",
+                  "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                  "PYTHON_VERSION=3.12.12",
+                  "PYTHON_SHA256=fb85a13414b028c49ba18bbd523c2d055a30b56b18b92ce454ea2c51edc656c4",
+                  "PYTHONDONTWRITEBYTECODE=1",
+                  "PYTHONUNBUFFERED=1",
+                  "UVICORN_WORKERS=1"
+                ],
+                "cwd": "/app",
+                "removeMountStubsRecursive": true
+              },
+              "mounts": [
+                {
+                  "dest": "/"
+                }
+              ]
+            }
+          },
+          "platform": {
+            "Architecture": "amd64",
+            "OS": "linux"
+          },
+          "constraints": {}
+        },
+        "inputs": [
+          "step7:0"
+        ]
+      },
+      {
+        "id": "step9",
+        "op": {
+          "Op": {}
+        },
+        "inputs": [
+          "step8:0"
+        ]
+      }
+    ],
+    "digestMapping": {
+      "sha256:3d9364eb8e0c3af988fe8911dd4f06f1fe8c3e2976c95fcac6720652cac9c745": "step6",
+      "sha256:57f03c3b4aba5dacd525084e4302e3ba75714d32a43b2343a426b988dd287e05": "step3",
+      "sha256:5ec0cefe42308df25e8402c7d40120272a19ad9c4386b7dda02b3f3aef33e848": "step9",
+      "sha256:a1cef535269f464e73d49e6e423353f9bf8677521124f5936699141ce1d6308a": "step7",
+      "sha256:b2ec69a39462f220da8de4dc9b525807c98cb3fc15df062187bca368a9b17708": "step0",
+      "sha256:bc44819f641bca8f2c2bb0958922efd6530296140ee8d5b8dd2b8631878e6a52": "step8",
+      "sha256:ca5ea63ecaf9cfd7ac5a363c42e4b0e4d4d7fe48fcca0bf2a008f1639751fd9b": "step5",
+      "sha256:d0c468b519f46aad57a87e98337d483c07564c6451f5bbedec47cc59bb4afcfd": "step2",
+      "sha256:dd67ae29464151c5572479b9b2919ee08640a7a4e49bf4155b1ae575eed4b366": "step1",
+      "sha256:e59971276a326f672dae9dabed0e7d8150f47712c12ce24be06945bd70948912": "step4"
+    }
+  },
+  "metadata": {
+    "buildInvocationID": "tivr1eiza8yx7guuycbphao4z",
+    "buildStartedOn": "2026-01-09T03:21:35.182857159Z",
+    "buildFinishedOn": "2026-01-09T03:21:41.202023834Z",
+    "completeness": {
+      "parameters": true,
+      "environment": true,
+      "materials": false
+    },
+    "reproducible": false,
+    "https://mobyproject.org/buildkit@v1#metadata": {
+      "vcs": {
+        "localdir:context": "backend",
+        "localdir:dockerfile": "backend",
+        "revision": "1cee133ea31c982f17ce19b1a9776bf941600d42",
+        "source": "https://github.com/nah414/synqc-temporal-dynamics-series-hybrid-controller-.git"
+      },
+      "source": {
+        "locations": {
+          "step0": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 15
+                    },
+                    "end": {
+                      "line": 15
+                    }
+                  }
+                ]
+              },
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 1
+                    },
+                    "end": {
+                      "line": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step1": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 17
+                    },
+                    "end": {
+                      "line": 17
+                    }
+                  }
+                ]
+              },
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 3
+                    },
+                    "end": {
+                      "line": 3
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step2": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 8
+                    },
+                    "end": {
+                      "line": 8
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step3": {},
+          "step4": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 10
+                    },
+                    "end": {
+                      "line": 10
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step5": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 11
+                    },
+                    "end": {
+                      "line": 11
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step6": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 13
+                    },
+                    "end": {
+                      "line": 13
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step7": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 23
+                    },
+                    "end": {
+                      "line": 23
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "step8": {
+            "locations": [
+              {
+                "ranges": [
+                  {
+                    "start": {
+                      "line": 25
+                    },
+                    "end": {
+                      "line": 25
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "infos": [
+          {
+            "filename": "Dockerfile",
+            "language": "Dockerfile",
+            "data": "RlJPTSBweXRob246My4xMi1zbGltIEFTIGJ1aWxkZXINCg0KV09SS0RJUiAvYXBwDQoNCkVOViBQWVRIT05ET05UV1JJVEVCWVRFQ09ERT0xIFwNCiAgICBQWVRIT05VTkJVRkZFUkVEPTENCg0KUlVOIHBpcCBpbnN0YWxsIC0tbm8tY2FjaGUtZGlyIC1VIHBpcCBzZXR1cHRvb2xzIHdoZWVsDQoNCkNPUFkgcHlwcm9qZWN0LnRvbWwgUkVBRE1FLm1kIC9hcHAvDQpDT1BZIHN5bnFjX2JhY2tlbmQgL2FwcC9zeW5xY19iYWNrZW5kDQoNClJVTiBwaXAgaW5zdGFsbCAtLW5vLWNhY2hlLWRpciAtLXByZWZpeD0vaW5zdGFsbCAuDQoNCkZST00gcHl0aG9uOjMuMTItc2xpbQ0KDQpXT1JLRElSIC9hcHANCg0KRU5WIFBZVEhPTkRPTlRXUklURUJZVEVDT0RFPTEgXA0KICAgIFBZVEhPTlVOQlVGRkVSRUQ9MSBcDQogICAgVVZJQ09STl9XT1JLRVJTPTENCg0KQ09QWSAtLWZyb209YnVpbGRlciAvaW5zdGFsbCAvdXNyL2xvY2FsDQoNClJVTiBta2RpciAtcCAvZGF0YQ0KRU5WIFNZTlFDX0pPQl9RVUVVRV9EQl9QQVRIPS9kYXRhL2pvYnMuc3FsaXRlMw0KDQpFWFBPU0UgODAwMQ0KDQpDTUQgWyJzaCIsICItYyIsICJ1dmljb3JuIHN5bnFjX2JhY2tlbmQuYXBpOmFwcCAtLWhvc3QgMC4wLjAuMCAtLXBvcnQgODAwMSAtLXdvcmtlcnMgJHtVVklDT1JOX1dPUktFUlN9Il0NCg==",
+            "llbDefinition": [
+              {
+                "id": "step0",
+                "op": {
+                  "Op": {
+                    "source": {
+                      "identifier": "local://dockerfile",
+                      "attrs": {
+                        "local.differ": "none",
+                        "local.followpaths": "[\"Dockerfile\",\"Dockerfile.dockerignore\",\"dockerfile\"]",
+                        "local.sharedkeyhint": "dockerfile"
+                      }
+                    }
+                  },
+                  "constraints": {}
+                }
+              },
+              {
+                "id": "step1",
+                "op": {
+                  "Op": {}
+                },
+                "inputs": [
+                  "step0:0"
+                ]
+              }
+            ],
+            "digestMapping": {
+              "sha256:cfaa3288dc401b1da4cc1e867709d4d2678aacd849399fe8234e5b56c4327d40": "step0",
+              "sha256:cfd0d9fa65ff7815006a16f14dc1118e85f4a05d24206fb85e175ab20f57986d": "step1"
+            }
+          }
+        ]
+      },
+      "layers": {
+        "step0:0": [
+          [
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff",
+              "size": 29776533
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8",
+              "size": 1292764
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e",
+              "size": 12111963
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18",
+              "size": 250
+            }
+          ]
+        ],
+        "step1:0": [
+          [
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff",
+              "size": 29776533
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8",
+              "size": 1292764
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e",
+              "size": 12111963
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18",
+              "size": 250
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:272e4e1146e239c17e6a0b5e81bef6db9a375a41586a8e1664074d88ce6ce799",
+              "size": 93
+            }
+          ]
+        ],
+        "step7:0": [
+          [
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff",
+              "size": 29776533
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8",
+              "size": 1292764
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e",
+              "size": 12111963
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18",
+              "size": 250
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:272e4e1146e239c17e6a0b5e81bef6db9a375a41586a8e1664074d88ce6ce799",
+              "size": 93
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:364999a5e2f4e5a48d4eadbba49ef5c11098c4e87d31475586e631970c2c2554",
+              "size": 36047229
+            }
+          ]
+        ],
+        "step8:0": [
+          [
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff",
+              "size": 29776533
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8",
+              "size": 1292764
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e",
+              "size": 12111963
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18",
+              "size": 250
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:272e4e1146e239c17e6a0b5e81bef6db9a375a41586a8e1664074d88ce6ce799",
+              "size": 93
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:364999a5e2f4e5a48d4eadbba49ef5c11098c4e87d31475586e631970c2c2554",
+              "size": 36047229
+            },
+            {
+              "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+              "digest": "sha256:61ed18a8124fa4df07a439972af9174e90b810e9c210bc249d2220643501c2e4",
+              "size": 93
+            }
+          ]
+        ]
+      },
+      "sysUsage": [
+        {
+          "timestamp": "2026-01-09T03:21:37.077268467Z",
+          "cpuStat": {
+            "user": 57689.39,
+            "nice": 16.94,
+            "system": 18294.91,
+            "idle": 47181.13,
+            "iowait": 564.12,
+            "irq": 0,
+            "softirq": 1598.97,
+            "steal": 0,
+            "guest": 0,
+            "guestNice": 0
+          },
+          "procStat": {
+            "contextSwitches": 554432250,
+            "processCreated": 717983,
+            "processesRunning": 16
+          },
+          "memoryStat": {
+            "total": 3902708,
+            "free": 184560,
+            "available": 1685440,
+            "buffers": 123012,
+            "cached": 1465900,
+            "active": 1656040,
+            "inactive": 1517052,
+            "swap": 1048576,
+            "dirty": 672,
+            "writeback": 0,
+            "slab": 286760
+          },
+          "cpuPressure": {
+            "some": {
+              "avg10": 36.12,
+              "avg60": 27.26,
+              "avg300": 25.92,
+              "total": 9128084453
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 0
+            }
+          },
+          "memoryPressure": {
+            "some": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 171575757
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 41532403
+            }
+          },
+          "ioPressure": {
+            "some": {
+              "avg10": 0.32,
+              "avg60": 0.21,
+              "avg300": 0.2,
+              "total": 462427345
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 131014743
+            }
+          }
+        },
+        {
+          "timestamp": "2026-01-09T03:21:39.078004753Z",
+          "cpuStat": {
+            "user": 57693.19,
+            "nice": 16.94,
+            "system": 18295.74,
+            "idle": 47184.24,
+            "iowait": 564.15,
+            "irq": 0,
+            "softirq": 1599.05,
+            "steal": 0,
+            "guest": 0,
+            "guestNice": 0
+          },
+          "procStat": {
+            "contextSwitches": 554459021,
+            "processCreated": 718040,
+            "processesRunning": 3
+          },
+          "memoryStat": {
+            "total": 3902708,
+            "free": 237904,
+            "available": 1738908,
+            "buffers": 123024,
+            "cached": 1465992,
+            "active": 1656124,
+            "inactive": 1454780,
+            "swap": 1048576,
+            "dirty": 772,
+            "writeback": 0,
+            "slab": 286744
+          },
+          "cpuPressure": {
+            "some": {
+              "avg10": 42.44,
+              "avg60": 28.69,
+              "avg300": 26.23,
+              "total": 9128473642
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 0
+            }
+          },
+          "memoryPressure": {
+            "some": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 171580723
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 41533541
+            }
+          },
+          "ioPressure": {
+            "some": {
+              "avg10": 0.62,
+              "avg60": 0.26,
+              "avg300": 0.21,
+              "total": 462439062
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 131021901
+            }
+          }
+        },
+        {
+          "timestamp": "2026-01-09T03:21:41.078021168Z",
+          "cpuStat": {
+            "user": 57696.36,
+            "nice": 16.94,
+            "system": 18296.9,
+            "idle": 47187.31,
+            "iowait": 564.3,
+            "irq": 0,
+            "softirq": 1599.3,
+            "steal": 0,
+            "guest": 0,
+            "guestNice": 0
+          },
+          "procStat": {
+            "contextSwitches": 554492422,
+            "processCreated": 718055,
+            "processesRunning": 9
+          },
+          "memoryStat": {
+            "total": 3902708,
+            "free": 188956,
+            "available": 1693176,
+            "buffers": 123048,
+            "cached": 1469188,
+            "active": 1657100,
+            "inactive": 1511120,
+            "swap": 1048576,
+            "dirty": 872,
+            "writeback": 0,
+            "slab": 286736
+          },
+          "cpuPressure": {
+            "some": {
+              "avg10": 37.65,
+              "avg60": 28.28,
+              "avg300": 26.16,
+              "total": 9128981193
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 0
+            }
+          },
+          "memoryPressure": {
+            "some": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 171583319
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 41534641
+            }
+          },
+          "ioPressure": {
+            "some": {
+              "avg10": 0.51,
+              "avg60": 0.25,
+              "avg300": 0.21,
+              "total": 462535878
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 131058036
+            }
+          }
+        },
+        {
+          "timestamp": "2026-01-09T03:21:43.079052052Z",
+          "cpuStat": {
+            "user": 57701.08,
+            "nice": 16.94,
+            "system": 18298.95,
+            "idle": 47187.49,
+            "iowait": 564.36,
+            "irq": 0,
+            "softirq": 1599.66,
+            "steal": 0,
+            "guest": 0,
+            "guestNice": 0
+          },
+          "procStat": {
+            "contextSwitches": 554534551,
+            "processCreated": 718102,
+            "processesRunning": 11
+          },
+          "memoryStat": {
+            "total": 3902708,
+            "free": 162828,
+            "available": 1668012,
+            "buffers": 123792,
+            "cached": 1469588,
+            "active": 1657756,
+            "inactive": 1524180,
+            "swap": 1048576,
+            "dirty": 1188,
+            "writeback": 0,
+            "slab": 286732
+          },
+          "cpuPressure": {
+            "some": {
+              "avg10": 37.71,
+              "avg60": 28.6,
+              "avg300": 26.24,
+              "total": 9130047482
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 0
+            }
+          },
+          "memoryPressure": {
+            "some": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 171583718
+            },
+            "full": {
+              "avg10": 0,
+              "avg60": 0,
+              "avg300": 0,
+              "total": 41534698
+            }
+          },
+          "ioPressure": {
+            "some": {
+              "avg10": 1.68,
+              "avg60": 0.48,
+              "avg300": 0.25,
+              "total": 462750120
+            },
+            "full": {
+              "avg10": 0.36,
+              "avg60": 0.07,
+              "avg300": 0.01,
+              "total": 131071644
+            }
+          }
+        }
+      ]
+    }
+  }
+}
