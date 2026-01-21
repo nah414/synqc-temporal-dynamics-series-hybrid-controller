@@ -1,2 +1,2 @@
 # synqc-temporal-dynamics-series-hybrid-controller
-local tested prototype now being modified and revised into a refined product
+This repo has been used to test and prove a working prototype hybrid traffic controller/accelerator. Everything you need is here for local testing and real hardware runs but I recommend you build your own web MVP UI as the one provided here would be for local personal use only! Tools you want to have: Git Bash, Docker, Redis and Grafana. Utilizes Prometheus web scraping. Build directions for sandbox Agents. Have fun and be responsible.
